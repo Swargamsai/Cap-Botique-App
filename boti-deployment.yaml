@@ -1,0 +1,34 @@
+apiVersion: apps/v1 
+kind: Deployment 
+metadata:
+  name: boti-app-deployment 
+spec: 
+  replicas: 3
+  selector:
+    matchLabels:
+      web: organic
+  template:
+    metadata:
+      labels:
+        web: organic 
+    spec: 
+      containers:
+        - image: swargamsai/cap-bot-app:latest
+          name: sample-organic 
+          ports:
+            - containerPort: 3000
+--- 
+apiVersion: v1 
+kind: Service
+metadata:
+  name: cart-page-svc
+spec:
+  selector:
+    web: organic 
+  ports:
+  - port: 3002 # Service Port or Host Port on which port number you are going access the application
+    targetPort: 3000 # On Which Port Number the application is going to working 
+    protocol: TCP 
+  type: ClusterIP   
+            
+          
